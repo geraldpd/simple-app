@@ -61,4 +61,12 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    /**
+     * Get the customers of the user.
+     */
+    public function customers()
+    {
+        return $this->hasMany(Customer::class);
+    }
 }
