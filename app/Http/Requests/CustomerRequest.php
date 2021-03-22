@@ -26,7 +26,7 @@ class CustomerRequest extends FormRequest
         return [
             'firstname' => ['required', 'string'],
             'lastname' => ['required', 'string'],
-            'birth_date' => ['required', 'date'],
+            'birth_date' => ['required', 'date']
         ];
     }
 }

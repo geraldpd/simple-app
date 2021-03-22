@@ -17,8 +17,7 @@ class CustomerResource extends JsonResource
         return [
             'firstname' => $this->firstname,
             'lastname' => $this->lastname,
-            'birth_date' => $this->birth_date->format('M d, Y'),
-            //'user_id' => $this->user->id,
+            'birth_date' => $this->birth_date->format('M d, Y')
         ];
     }
 }
