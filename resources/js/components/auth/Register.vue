@@ -1,6 +1,8 @@
 <template>
     <v-container>
         <form @submit.prevent="register">
+            <h1>Register</h1>
+
             <v-text-field
             v-model="form.name"
             label="Name"

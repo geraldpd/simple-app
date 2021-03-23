@@ -1,6 +1,8 @@
 <template>
     <v-container>
         <form @submit.prevent="login">
+            <h1>Login</h1>
+
             <v-text-field
             v-model="form.email"
             label="E-mail"
@@ -40,7 +42,6 @@ export default {
     methods: {
         login(){
             User.login(this.form)
-            this.$router.push({name: 'customer'})
         }
     }
 }

@@ -15,9 +15,11 @@ class CustomerResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'firstname' => $this->firstname,
             'lastname' => $this->lastname,
-            'birth_date' => $this->birth_date->format('M d, Y')
+            'birthday' => $this->birth_date->format('M d, Y'),
+            'birth_date' => $this->birth_date
         ];
     }
 }

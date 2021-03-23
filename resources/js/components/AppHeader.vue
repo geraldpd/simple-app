@@ -1,10 +1,4 @@
 <template>
-  <v-card
-    color="grey lighten-4"
-    flat
-    height="200px"
-    tile
-  >
     <v-toolbar dense>
       <v-toolbar-title>SIMPLE APP</v-toolbar-title>
 
@@ -14,15 +8,16 @@
 
           <v-btn
           v-for="item in items"
-          :key="item.title"
           v-if="item.show"
-          text>
-            <router-link :to='item.to'>{{item.title}}</router-link>
+          :key="item.title"
+          :to="item.to"
+          text
+          >
+            {{item.title}}
           </v-btn>
 
       </v-toolbar-items>
     </v-toolbar>
-  </v-card>
 </template>
 
 <script>
