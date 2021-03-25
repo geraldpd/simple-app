@@ -19,6 +19,9 @@
             body {
                 font-family: 'Nunito', sans-serif;
             }
+            .red--text {
+                color:red
+            }
         </style>
     </head>
     <body>

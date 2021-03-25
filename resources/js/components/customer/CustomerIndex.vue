@@ -212,11 +212,17 @@
     },
 
     created () {
+      if(!User.loggedIn()) this.$router.push({name: 'login'});
       this.initialize()
     },
 
     methods: {
       initialize () {
+
+        if (!User.loggedIn()) {
+          this.$router.push({name: 'login'})
+        }
+
         axios.get('/api/customer')
         .then(res => this.customers = res.data)
         .catch(res => console.warn(res));

@@ -2,10 +2,10 @@ import Token from './Token'
 import AppStorage from './AppStorage'
 
 class User {
-    login(data){
-        axios.post('api/auth/login', data)
+    login(data, errorCallback){
+        return axios.post('api/auth/login', data)
         .then(res => this.responseAfterLogin(res))
-        .catch(res => console.log(res.response.data));
+        .catch(res => errorCallback());
     }
 
     responseAfterLogin(res){
@@ -31,7 +31,7 @@ class User {
 
     logout(){
         AppStorage.clear();
-        window.location = '/'
+        window.location = '/login'
     }
 
     name(){

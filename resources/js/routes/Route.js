@@ -10,7 +10,7 @@ const routes = {
     mode: 'history',
     hashbang: false,
     routes: [
-        {path: '/login', component: Login },
+        {path: '/login', component: Login, name: 'login'  },
         {path: '/register', component: Register },
         {path: '/logout', component: Logout },
         {path: '/customer', component: CustomerIndex, name: 'customer' },

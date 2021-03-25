@@ -23,6 +23,7 @@
             v-model="form.password"
             label="password"
             type="password"
+            minlength=6
             required
             ></v-text-field>
             <span class="red--text" v-if="errors.password">{{ errors.password[0] }}</span>
@@ -31,6 +32,7 @@
             v-model="form.password_confirmation"
             label="confirm password"
             type="password"
+            minlength=6
             required
             ></v-text-field>
             <span class="red--text" v-if="errors.password_confirmation">{{ errors.password_confirmation[0] }}</span>
@@ -59,11 +61,13 @@ export default {
             errors: {}
         }
     },
+
     created(){
       if(User.loggedIn()) {
-          //this.$router.push({name: 'forum'});
+          this.$router.push({name: 'customer'});
       }
     },
+
     methods: {
         register(){
             axios.post('api/auth/register', this.form)

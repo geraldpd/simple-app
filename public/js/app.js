@@ -2001,18 +2001,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       form: {
         email: null,
         password: null
-      }
+      },
+      hasError: false
     };
+  },
+  created: function created() {
+    if (User.loggedIn()) {
+      this.$router.push({
+        name: 'customer'
+      });
+    }
   },
   methods: {
     login: function login() {
-      User.login(this.form);
+      var _this = this;
+
+      User.login(this.form, function (_) {
+        _this.hasError = true;
+      });
     }
   }
 });
@@ -2102,6 +2117,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2114,7 +2131,10 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    if (User.loggedIn()) {//this.$router.push({name: 'forum'});
+    if (User.loggedIn()) {
+      this.$router.push({
+        name: 'customer'
+      });
     }
   },
   methods: {
@@ -2371,11 +2391,20 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
+    if (!User.loggedIn()) this.$router.push({
+      name: 'login'
+    });
     this.initialize();
   },
   methods: {
     initialize: function initialize() {
       var _this2 = this;
+
+      if (!User.loggedIn()) {
+        this.$router.push({
+          name: 'login'
+        });
+      }
 
       axios.get('/api/customer').then(function (res) {
         return _this2.customers = res.data;
@@ -2688,13 +2717,13 @@ var User = /*#__PURE__*/function () {
 
   _createClass(User, [{
     key: "login",
-    value: function login(data) {
+    value: function login(data, errorCallback) {
       var _this = this;
 
-      axios.post('api/auth/login', data).then(function (res) {
+      return axios.post('api/auth/login', data).then(function (res) {
         return _this.responseAfterLogin(res);
       })["catch"](function (res) {
-        return console.log(res.response.data);
+        return errorCallback();
       });
     }
   }, {
@@ -2728,7 +2757,7 @@ var User = /*#__PURE__*/function () {
     key: "logout",
     value: function logout() {
       _AppStorage__WEBPACK_IMPORTED_MODULE_1__.default.clear();
-      window.location = '/';
+      window.location = '/login';
     }
   }, {
     key: "name",
@@ -2778,7 +2807,8 @@ var routes = {
   hashbang: false,
   routes: [{
     path: '/login',
-    component: _components_auth_Login__WEBPACK_IMPORTED_MODULE_0__.default
+    component: _components_auth_Login__WEBPACK_IMPORTED_MODULE_0__.default,
+    name: 'login'
   }, {
     path: '/register',
     component: _components_auth_Register__WEBPACK_IMPORTED_MODULE_1__.default
@@ -38830,6 +38860,12 @@ var render = function() {
       [
         _c("h1", [_vm._v("Login")]),
         _vm._v(" "),
+        _vm.hasError
+          ? _c("span", { staticClass: "red--text" }, [
+              _vm._v("Account does not exist in our database")
+            ])
+          : _vm._e(),
+        _vm._v(" "),
         _c("v-text-field", {
           attrs: { label: "E-mail", type: "email", required: "" },
           model: {
@@ -38842,7 +38878,12 @@ var render = function() {
         }),
         _vm._v(" "),
         _c("v-text-field", {
-          attrs: { label: "password", type: "password", required: "" },
+          attrs: {
+            label: "password",
+            type: "password",
+            minlength: "6",
+            required: ""
+          },
           model: {
             value: _vm.form.password,
             callback: function($$v) {
@@ -38957,7 +38998,12 @@ var render = function() {
           : _vm._e(),
         _vm._v(" "),
         _c("v-text-field", {
-          attrs: { label: "password", type: "password", required: "" },
+          attrs: {
+            label: "password",
+            type: "password",
+            minlength: "6",
+            required: ""
+          },
           model: {
             value: _vm.form.password,
             callback: function($$v) {
@@ -38974,7 +39020,12 @@ var render = function() {
           : _vm._e(),
         _vm._v(" "),
         _c("v-text-field", {
-          attrs: { label: "confirm password", type: "password", required: "" },
+          attrs: {
+            label: "confirm password",
+            type: "password",
+            minlength: "6",
+            required: ""
+          },
           model: {
             value: _vm.form.password_confirmation,
             callback: function($$v) {

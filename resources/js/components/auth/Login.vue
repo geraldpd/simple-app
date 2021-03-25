@@ -3,6 +3,8 @@
         <form @submit.prevent="login">
             <h1>Login</h1>
 
+            <span class="red--text" v-if="hasError">Account does not exist in our database</span>
+
             <v-text-field
             v-model="form.email"
             label="E-mail"
@@ -14,6 +16,7 @@
             v-model="form.password"
             label="password"
             type="password"
+            minlength=6
             required
             ></v-text-field>
 
@@ -36,12 +39,22 @@ export default {
             form: {
                 email: null,
                 password: null
-            }
+            },
+            hasError: false
         }
     },
+
+    created(){
+      if(User.loggedIn()) {
+          this.$router.push({name: 'customer'});
+      }
+    },
+
     methods: {
         login(){
-            User.login(this.form)
+            User.login(this.form, _ => {
+                this.hasError = true;
+            })
         }
     }
 }
